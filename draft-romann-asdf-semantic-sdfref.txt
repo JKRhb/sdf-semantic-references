@@ -13,7 +13,17 @@ Expires: 3 September 2026
 
 Abstract
 
-   TODO Abstract
+   The Semantic Definition Format (SDF) for Data and Interactions of
+   Things allows for referencing and importing definitions from other
+   documents via the sdfRef quality.  In the base SDF specification
+   [RFC9880], these references are only structural in nature and do not
+   consider semantic aspects such as the version of the referenced
+   model.
+
+   In this memo, we are proposing an extension for SDF's namespace
+   concept that makes it possible to take into account semantic aspects
+   when using sdfRef, but also in other scenarios when referring to
+   external definitions.
 
 About This Document
 
@@ -29,7 +39,7 @@ About This Document
    https://www.ietf.org/mailman/listinfo/asdf/.
 
    Source for this draft and an issue tracker can be found at
-   https://github.com/JKRhb/sdf-coap-protocol-map.
+   https://github.com/JKRhb/sdf-semantic-references.
 
 Status of This Memo
 
@@ -66,17 +76,42 @@ Table of Contents
 
    1.  Introduction
    2.  Conventions and Definitions
-   3.  Security Considerations
-   4.  IANA Considerations
-   5.  Normative References
+   3.  Namespace Extensions
+   4.  Examples
+   5.  Security Considerations
+   6.  IANA Considerations
+   7.  Normative References
    Acknowledgments
    Author's Address
 
 1.  Introduction
 
-   TODO Introduction
+   The Semantic Definition Format (SDF) for Data and Interactions of
+   Things allows for referencing and importing definitions from other
+   documents via the sdfRef quality.  In the base SDF specification
+   [RFC9880], these references are only structural in nature and do not
+   consider semantic aspects such as the version of the referenced
+   model.
+
+   In this memo, we are proposing an extension for SDF's namespace
+   concept that makes it possible to take into account semantic aspects
+   when using sdfRef, but also in other scenarios when referring to
+   external definitions.
 
 2.  Conventions and Definitions
+
+   The definitions of [RFC9880] and [RFC9535] apply.
+
+   SDF Repository:  A web server hosting SDF models.  In accordance to
+      [RFC9880], one or more SDF models may belong to the same
+      namespace.  The SDF Repository is responsible to return the
+      correct models that satisfy a SDF Consumer's request.  For this
+      purpose, the SDF Repository might combine multiple individual
+      models that belong to the same namespace into one.
+
+   SDF Consumer:  A client that retrieves and processes SDF models
+      (e.g., for translation purposes or to interact with a device that
+      implements an SDF model).
 
    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
    "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
@@ -84,15 +119,151 @@ Table of Contents
    BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
    capitals, as shown here.
 
-3.  Security Considerations
+3.  Namespace Extensions
 
-   TODO Security
+   SDF's namespace concept maps shorthands such as foo to URIs that
+   identify global names.  These URIs use the https scheme and a path.
+   Using JSON pointers as fragement identifiers, it is possible to refer
+   to concrete definitions from other SDF models.
 
-4.  IANA Considerations
+   In base SDF, the query part of the URIs is deliberately left out and
+   reserved for extensions.  This memo utilizes query parameters to
+   enhance the namespacing concept with additional semantic
+   capabilities, especially when it comes to referring to specific
+   versions or version ranges of SDF models.
+
+   For this purpose, this memo introduces two standardized query
+   parameters (see Table 1) that
+
+   1.  allow for such version-dependent references (using the version
+       parameter),
+
+   2.  make it possible to restrict the part of the namespace that
+       should be returned when deferencing a namespace URI (using the
+       subtree parameter).
+
+   The version constraints used for the version parameter SHOULD follow
+   Semantic Versioning or a similar approach for semantic version
+   numbers.  An SDF Repository SHOULD adhere to the version constraints
+   indicated via the version parameter and return a model with either
+   the exact or a compatible version number.
+
+   The introduction of the subtree parameter is motivated by the fact
+   that multiple models may contribute to the same SDF namespace (and
+   fragment identifiers are not transferred) Using a JSON Path query
+   with this paramter allows for giving the SDF Repository hosting the
+   namespace definitions a hint on which parts of the target namespace
+   should be included in the output.  When an SDF Consumer specifies a
+   set of sdfObjects and/or sdfThings in its request, the SDF Repository
+   MAY leave out definitions that are not needed to fulfill the request.
+   Similarly, the SDF Repository MAY combine multiple models from the
+   same namespace into one to satisfy the Consumer's request.
+
+   +===========+===========+==========================================+
+   | Parameter | Format    | Description                              |
+   +===========+===========+==========================================+
+   | version   | any       | Defines the version number or version    |
+   |           |           | range of the model that is being         |
+   |           |           | referenced via the namespace URI.        |
+   +-----------+-----------+------------------------------------------+
+   | subtree   | JSON Path | Indicates the subtreee of the referenced |
+   |           | [RFC9535] | model that should be returned when       |
+   |           |           | dereferencing the namespace URI.         |
+   +-----------+-----------+------------------------------------------+
+
+       Table 1: Table with the query parameters for namespace URIs
+                      defined in this specification.
+
+4.  Examples
+
+   A simple example for a model that uses the version parameter is shown
+   in Figure 1.  Here, the caret character (^, percent-encoded as %5E)
+   in the parameter value ^1.1.0 indicates that a version compatible
+   with version 1.0.0 should be provided by the SDF repository.  The ^
+   indicates that this should be a compatible _patch_ version (i.e., the
+   third digit may be greater than 0), while a ~ would indicate the same
+   for the _ minor_ version or second digit.  As the first digit stands
+   for major versions, these updates are considered non-backwards-
+   compatible and should not be retrieved automatically.
+
+   namespace:
+     cap: https://example.com/capability/cap?version=%5E1.1.0
+     lamps: https://example.com/lamps
+   defaultNamespace: lamps
+   sdfObject:
+     LightSwitch:
+       sdfAction:
+         toggle:
+           sdfRef: cap:/sdfObject/Switch/sdfAction/toggle
+
+        Figure 1: Example SDF model of a light switch that refers to
+           models of capabilities compatible with version 1.1.0.
+
+   The parametrization of URIs can also be used to use different version
+   ranges for certain parts of a referenced namespace.  In the example
+   shown in Figure 2, a version 2.0.0 of the models hosted under
+   https://example.com/capability/cap has added a new status property
+   that has not been part of previous versions.  At the same time, a
+   non-backwards-compatible change has been applied to the referenced
+   toggle action.  To keep using the old toggle action while already
+   incorporating the new status property, the namespacing concept allows
+   referring to different versions via the new query parameters that
+   have been introduced.
+
+   namespace:
+     cap11: https://example.com/capability/cap?version=%5E1.1.0
+     cap2: https://example.com/capability/cap?version=%5E2.0.0
+     lamps: https://example.com/lamps
+   defaultNamespace: lamps
+   sdfObject:
+     LightSwitch:
+       sdfAction:
+         toggle:
+           sdfRef: cap11:/sdfObject/Switch/sdfAction/toggle
+       sdfProperty:
+         status:
+           sdfRef: cap:/sdfObject/Switch/sdfProperty/status
+
+      Figure 2: Example SDF model of a light switch that refers to two
+     different version ranges of models from the capability namespace.
+
+   Lastly, since we are only using definitions from the sdfObject Switch
+   in the referenced namespace, we can limit the subtree that we are
+   referring to via the subtree parameter.  Figure 3 shows a simple
+   example where a JSONPatch expression is being used for this purpose.
+   As JSONPath is very expressive, this approach allows for fine-grained
+   control for limiting how much of the target namespace will actually
+   be retrived when dereferencing the namespace URI.
+
+   namespace:
+     cap: https://example.com/capability/cap?version=%5E1.1.0&subtree=%24.sdfObject.Switch
+     lamps: https://example.com/lamps
+   defaultNamespace: lamps
+   sdfObject:
+     LightSwitch:
+       sdfAction:
+         toggle:
+           sdfRef: cap:/sdfObject/Switch/sdfAction/toggle
+
+       Figure 3: Example SDF model of a light switch restricting the
+      deferenced namespace via a JSONPath expression in dot notation.
+
+   Note that the use of both the version and the subtree parameters may
+   require the values to be percent-encoded, which decreases the human-
+   readability of the namespace URIs.
+
+5.  Security Considerations
+
+   The security considerations of [RFC9880] and [RFC9535] apply to this
+   document as well.
+
+   TODO More security
+
+6.  IANA Considerations
 
    This document has no IANA actions.
 
-5.  Normative References
+7.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -102,6 +273,11 @@ Table of Contents
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
+
+   [RFC9535]  Gössner, S., Ed., Normington, G., Ed., and C. Bormann,
+              Ed., "JSONPath: Query Expressions for JSON", RFC 9535,
+              DOI 10.17487/RFC9535, February 2024,
+              <https://www.rfc-editor.org/rfc/rfc9535>.
 
    [RFC9880]  Koster, M., Ed., Bormann, C., Ed., and A. Keränen,
               "Semantic Definition Format (SDF) for Data and
