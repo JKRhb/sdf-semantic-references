@@ -18,7 +18,7 @@ keyword: Internet-Draft
 venue:
   group: "A Semantic Definition Format for Data and Interactions of Things"
   mail: "asdf@ietf.org"
-  github: "JKRhb/sdf-coap-protocol-map"
+  github: "JKRhb/sdf-semantic-references"
 
 author:
   - name: Jan Romann
