@@ -13,7 +13,17 @@ Expires: 3 September 2026
 
 Abstract
 
-   TODO Abstract
+   The Semantic Definition Format (SDF) for Data and Interactions of
+   Things allows for referencing and importing definitions from other
+   documents via the sdfRef quality.  In the base SDF specification
+   [RFC9880], these references are only structural in nature and do not
+   consider semantic aspects such as the version of the referenced
+   model.
+
+   In this memo, we are proposing an extension for SDF's namespace
+   concept that makes it possible to take into account semantic aspects
+   when using sdfRef, but also in other scenarios when referring to
+   external definitions.
 
 About This Document
 
@@ -81,10 +91,12 @@ Table of Contents
    documents via the sdfRef quality.  In the base SDF specification
    [RFC9880], these references are only structural in nature and do not
    consider semantic aspects such as the version of the referenced
-   model.  In this memo, we are proposing an extension for SDF's
-   namespace concept that makes it possible to take into account
-   semantic aspects when using sdfRef, but also in other scenarios when
-   referring to external definitions.
+   model.
+
+   In this memo, we are proposing an extension for SDF's namespace
+   concept that makes it possible to take into account semantic aspects
+   when using sdfRef, but also in other scenarios when referring to
+   external definitions.
 
 2.  Conventions and Definitions
 
