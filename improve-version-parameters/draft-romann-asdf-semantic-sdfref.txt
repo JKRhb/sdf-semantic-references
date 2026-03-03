@@ -80,7 +80,9 @@ Table of Contents
    4.  Examples
    5.  Security Considerations
    6.  IANA Considerations
-   7.  Normative References
+   7.  References
+     7.1.  Normative References
+     7.2.  Informative References
    Acknowledgments
    Author's Address
 
@@ -221,8 +223,8 @@ Table of Contents
    language ecosystems, this would correspond with the "caret notation"
    (^) that indicates that patch versions for dependencies should be
    retrieved automatically.  As not all SDF models will use semantic
-   versioning in practice, this approach is more flexible and also
-   covers version numbers that rely on dates, for example.
+   versioning [SEMVER] in practice, this approach is more flexible and
+   also covers version numbers that rely on dates, for example.
 
    namespace:
      cap: https://example.com/capability/cap?minVersion=1.1.0&exclusiveMaxVersion=1.2.0
@@ -302,7 +304,9 @@ Table of Contents
 
    This document has no IANA actions.
 
-7.  Normative References
+7.  References
+
+7.1.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -322,6 +326,11 @@ Table of Contents
               "Semantic Definition Format (SDF) for Data and
               Interactions of Things", RFC 9880, DOI 10.17487/RFC9880,
               January 2026, <https://www.rfc-editor.org/rfc/rfc9880>.
+
+7.2.  Informative References
+
+   [SEMVER]   Preston-Werner, T., "Semantic Versioning 2.0.0",
+              <https://semver.org/spec/v2.0.0.html>.
 
 Acknowledgments
 
