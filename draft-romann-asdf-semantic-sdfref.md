@@ -30,6 +30,12 @@ normative:
   RFC9535: json-path
 
 informative:
+  SEMVER:
+    title: Semantic Versioning 2.0.0
+    author:
+      - name: Tom Preston-Werner
+    date: false
+    target: https://semver.org/spec/v2.0.0.html
 
 ...
 
@@ -126,7 +132,7 @@ title="Example SDF model of a light switch that refers to the version 1.1.0 of a
 A second example that also takes model updates into account is shown in {{code-version-parameter-example}}.
 Here, the parameters `minVersion` and `exlusiveMaxVersion` indicate that model version for the `cap` namespace should be greater than or equal to 1.1.0 but less than 1.2.0.
 In many programming language ecosystems, this would correspond with the "caret notation" (`^`) that indicates that patch versions for dependencies should be retrieved automatically.
-As not all SDF models will use semantic versioning in practice, this approach is more flexible and also covers version numbers that rely on dates, for example.
+As not all SDF models will use semantic versioning {{SEMVER}} in practice, this approach is more flexible and also covers version numbers that rely on dates, for example.
 
 ~~~ sdf
 namespace:
