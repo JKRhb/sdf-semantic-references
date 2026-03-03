@@ -79,36 +79,58 @@ Using JSON pointers as fragement identifiers, it is possible to refer to concret
 In base SDF, the query part of the URIs is deliberately left out and reserved for extensions.
 This memo utilizes query parameters to enhance the namespacing concept with additional semantic capabilities, especially when it comes to referring to specific versions or version ranges of SDF models.
 
-For this purpose, this memo introduces two standardized query parameters (see {{parameters-table}}) that
+For this purpose, this memo introduces a set of standardized query parameters (see {{parameters-table}}) that fall into two categories:
 
-1. allow for such version-dependent references (using the `version` parameter),
-2. make it possible to restrict the part of the namespace that should be returned when deferencing a namespace URI (using the `subtree` parameter).
+1. A set of version-related parameters that allow for semantic references (`version`, `minVersion`, `maxVersion`, `exclusiveMinVersion`, `exclusiveMaxVersion`) and
+2. the `subtree` parameter that restricts the part of the namespace that should be returned when deferencing it.
 
-The version constraints used for the `version` parameter SHOULD follow Semantic Versioning or a similar approach for semantic version numbers.
-An SDF Repository SHOULD adhere to the version constraints indicated via the `version` parameter and return a model with either the exact or a compatible version number.
+An SDF Repository SHOULD adhere to the version constraints indicated via the version-related parameters and return a model with either the exact or a compatible version number.
+If the combination of version-related parameters is unsatisfiable (e.g., by specifying a `minVersion` of 1.2.0 and a `maxVersion` of 1.1.0), the SDF Repository SHOULD return an appropriate error response with an HTTP status code 400 (Bad Request).
 
-The introduction of the `subtree` parameter is motivated by the fact that multiple models may contribute to the same SDF namespace (and fragment identifiers are not transferred)
+The introduction of the `subtree` parameter is motivated by the fact that multiple models may contribute to the same SDF namespace (and fragment identifiers are not included in HTTP requests).
 <!-- TODO: Check whether you can actually use JSON Path with HTTP query parameters -->
 Using a JSON Path query with this paramter allows for giving the SDF Repository hosting the namespace definitions a hint on which parts of the target namespace should be included in the output.
 When an SDF Consumer specifies a set of `sdfObject`s and/or `sdfThing`s in its request, the SDF Repository MAY leave out definitions that are not needed to fulfill the request.
 Similarly, the SDF Repository MAY combine multiple models from the same namespace into one to satisfy the Consumer's request.
 
-| Parameter | Format                   | Description                                                                                                  |
-| --------- | ------------------------ | ------------------------------------------------------------------------------------------------------------ |
-| version   | any                      | Defines the version number or version range of the model that is being referenced via the namespace URI.     |
-| subtree   | JSON Path {{-json-path}} | Indicates the subtreee of the referenced model that should be returned when dereferencing the namespace URI. |
+| Parameter           | Format                   | Description                                                                                                  |
+| ------------------- | ------------------------ | ------------------------------------------------------------------------------------------------------------ |
+| version             | any                      | Defines an exact model version that must match the retrieved model                                           |
+| minVersion          | any                      | Defines a lower version bound that also includes this particular version.                                    |
+| maxVersion          | any                      | Defines an upper version bound that also includes this particular version.                                   |
+| exclusiveMinVersion | any                      | Defines a lower version bound that does not include this particular version.                                 |
+| exclusiveMaxVersion | any                      | Defines an upper version bound that does not include this particular version.                                |
+| subtree             | JSON Path {{-json-path}} | Indicates the subtreee of the referenced model that should be returned when dereferencing the namespace URI. |
 {: #parameters-table title="Table with the query parameters for namespace URIs defined in this specification."}
 
 # Examples
 
-A simple example for a model that uses the `version` parameter is shown in {{code-version-parameter-example}}.
-Here, the caret character (`^`, percent-encoded as `%5E`) in the parameter value `^1.1.0` indicates that a version compatible with version `1.0.0` should be provided by the SDF repository.
-The `^` indicates that this should be a compatible _patch_ version (i.e., the third digit may be greater than 0), while a `~` would indicate the same for the _ minor_ version or second digit.
-As the first digit stands for major versions, these updates are considered non-backwards-compatible and should not be retrieved automatically.
+A simple example for a model that uses the `version` parameter is shown in {{code-simple-version-parameter-example}}.
+In this example, the version of the referenced model for the `cap` namespace must match the value 1.1.0.
+Updates that are applied to referenced model are not retrieved automatically.
 
 ~~~ sdf
 namespace:
-  cap: https://example.com/capability/cap?version=%5E1.1.0
+  cap: https://example.com/capability/cap?version=1.1.0
+  lamps: https://example.com/lamps
+defaultNamespace: lamps
+sdfObject:
+  LightSwitch:
+    sdfAction:
+      toggle:
+        sdfRef: cap:/sdfObject/Switch/sdfAction/toggle
+~~~
+{:sdf #code-simple-version-parameter-example
+title="Example SDF model of a light switch that refers to the version 1.1.0 of an external model."}
+
+A second example that also takes model updates into account is shown in {{code-version-parameter-example}}.
+Here, the parameters `minVersion` and `exlusiveMaxVersion` indicate that model version for the `cap` namespace should be greater than or equal to 1.1.0 but less than 1.2.0.
+In many programming language ecosystems, this would correspond with the "caret notation" (`^`) that indicates that patch versions for dependencies should be retrieved automatically.
+As not all SDF models will use semantic versioning in practice, this approach is more flexible and also covers version numbers that rely on dates, for example.
+
+~~~ sdf
+namespace:
+  cap: https://example.com/capability/cap?minVersion=1.1.0&exclusiveMaxVersion=1.2.0
   lamps: https://example.com/lamps
 defaultNamespace: lamps
 sdfObject:
@@ -118,17 +140,17 @@ sdfObject:
         sdfRef: cap:/sdfObject/Switch/sdfAction/toggle
 ~~~
 {:sdf #code-version-parameter-example
-title="Example SDF model of a light switch that refers to models of capabilities compatible with version 1.1.0."}
+title="Example SDF model of a light switch that refers to a model version that is greater than or equal 1.1.0 and less than 1.2.0."}
 
 The parametrization of URIs can also be used to use different version ranges for certain parts of a referenced namespace.
-In the example shown in {{code-different-versions-parameter-example}}, a version 2.0.0 of the models hosted under `https://example.com/capability/cap` has added a new status property that has not been part of previous versions.
-At the same time, a non-backwards-compatible change has been applied to the referenced `toggle` action.
+In the example shown in {{code-different-versions-parameter-example}}, version 2.0.0 of the models hosted under `https://example.com/capability/cap` has added a new status property that has not been part of previous versions.
+At the same time, a non-backwards-compatible change has been applied to the referenced `toggle` action that should not be taken over yet.
 To keep using the old `toggle` action while already incorporating the new `status` property, the namespacing concept allows referring to different versions via the new query parameters that have been introduced.
 
 ~~~ sdf
 namespace:
-  cap11: https://example.com/capability/cap?version=%5E1.1.0
-  cap2: https://example.com/capability/cap?version=%5E2.0.0
+  cap11: https://example.com/capability/cap?minVersion=1.1.0&exclusiveMaxVersion=1.2.0
+  cap2: https://example.com/capability/cap?minVersion=2.0.0&exclusiveMaxVersion=2.1.0
   lamps: https://example.com/lamps
 defaultNamespace: lamps
 sdfObject:
@@ -138,7 +160,7 @@ sdfObject:
         sdfRef: cap11:/sdfObject/Switch/sdfAction/toggle
     sdfProperty:
       status:
-        sdfRef: cap:/sdfObject/Switch/sdfProperty/status
+        sdfRef: cap2:/sdfObject/Switch/sdfProperty/status
 ~~~
 {:sdf #code-different-versions-parameter-example
 title="Example SDF model of a light switch that refers to two different version ranges of models from the capability namespace."}
@@ -149,7 +171,7 @@ As JSONPath is very expressive, this approach allows for fine-grained control fo
 
 ~~~ sdf
 namespace:
-  cap: https://example.com/capability/cap?version=%5E1.1.0&subtree=%24.sdfObject.Switch
+  cap: https://example.com/capability/cap?minVersion=1.1.0&exclusiveMaxVersion=1.2.0&subtree=%24.sdfObject.Switch
   lamps: https://example.com/lamps
 defaultNamespace: lamps
 sdfObject:
@@ -161,7 +183,7 @@ sdfObject:
 {:sdf #code-jsonpath-example
 title="Example SDF model of a light switch restricting the deferenced namespace via a JSONPath expression in dot notation."}
 
-Note that the use of both the `version` and the `subtree` parameters may require the values to be percent-encoded, which decreases the human-readability of the namespace URIs.
+Note that the use of the `subtree` parameter requires percent-encoding parts of the value, which decreases the human-readability of the namespace URIs.
 
 # Security Considerations
 
