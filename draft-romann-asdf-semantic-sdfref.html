@@ -1051,7 +1051,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Romann</td>
-<td class="center">Expires 3 September 2026</td>
+<td class="center">Expires 4 September 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1064,12 +1064,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-romann-asdf-semantic-sdfref-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-03-02" class="published">2 March 2026</time>
+<time datetime="2026-03-03" class="published">3 March 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-09-03">3 September 2026</time></dd>
+<dd class="expires"><time datetime="2026-09-04">4 September 2026</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1120,7 +1120,7 @@ In the base SDF specification <span>[<a href="#RFC9880" class="cite xref">RFC988
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 3 September 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 4 September 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1168,7 +1168,15 @@ In the base SDF specification <span>[<a href="#RFC9880" class="cite xref">RFC988
             <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7">
-            <p id="section-toc.1-1.7.1"><a href="#section-7" class="auto internal xref">7</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+            <p id="section-toc.1-1.7.1"><a href="#section-7" class="auto internal xref">7</a>.  <a href="#name-references" class="internal xref">References</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.1">
+                <p id="section-toc.1-1.7.2.1.1"><a href="#section-7.1" class="auto internal xref">7.1</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.2">
+                <p id="section-toc.1-1.7.2.2.1"><a href="#section-7.2" class="auto internal xref">7.2</a>.  <a href="#name-informative-references" class="internal xref">Informative References</a></p>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8">
             <p id="section-toc.1-1.8.1"><a href="#appendix-A" class="auto internal xref"></a><a href="#name-acknowledgments" class="internal xref">Acknowledgments</a></p>
@@ -1229,18 +1237,18 @@ These URIs use the <code>https</code> scheme and a path.
 Using JSON pointers as fragement identifiers, it is possible to refer to concrete definitions from other SDF models.<a href="#section-3-1" class="pilcrow">¶</a></p>
 <p id="section-3-2">In base SDF, the query part of the URIs is deliberately left out and reserved for extensions.
 This memo utilizes query parameters to enhance the namespacing concept with additional semantic capabilities, especially when it comes to referring to specific versions or version ranges of SDF models.<a href="#section-3-2" class="pilcrow">¶</a></p>
-<p id="section-3-3">For this purpose, this memo introduces two standardized query parameters (see <a href="#parameters-table" class="auto internal xref">Table 1</a>) that<a href="#section-3-3" class="pilcrow">¶</a></p>
+<p id="section-3-3">For this purpose, this memo introduces a set of standardized query parameters (see <a href="#parameters-table" class="auto internal xref">Table 1</a>) that fall into two categories:<a href="#section-3-3" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-3-4">
 <li id="section-3-4.1">
-          <p id="section-3-4.1.1">allow for such version-dependent references (using the <code>version</code> parameter),<a href="#section-3-4.1.1" class="pilcrow">¶</a></p>
+          <p id="section-3-4.1.1">A set of version-related parameters that allow for semantic references (<code>version</code>, <code>minVersion</code>, <code>maxVersion</code>, <code>exclusiveMinVersion</code>, <code>exclusiveMaxVersion</code>) and<a href="#section-3-4.1.1" class="pilcrow">¶</a></p>
 </li>
         <li id="section-3-4.2">
-          <p id="section-3-4.2.1">make it possible to restrict the part of the namespace that should be returned when deferencing a namespace URI (using the <code>subtree</code> parameter).<a href="#section-3-4.2.1" class="pilcrow">¶</a></p>
+          <p id="section-3-4.2.1">the <code>subtree</code> parameter that restricts the part of the namespace that should be returned when deferencing it.<a href="#section-3-4.2.1" class="pilcrow">¶</a></p>
 </li>
       </ol>
-<p id="section-3-5">The version constraints used for the <code>version</code> parameter <span class="bcp14">SHOULD</span> follow Semantic Versioning or a similar approach for semantic version numbers.
-An SDF Repository <span class="bcp14">SHOULD</span> adhere to the version constraints indicated via the <code>version</code> parameter and return a model with either the exact or a compatible version number.<a href="#section-3-5" class="pilcrow">¶</a></p>
-<p id="section-3-6">The introduction of the <code>subtree</code> parameter is motivated by the fact that multiple models may contribute to the same SDF namespace (and fragment identifiers are not transferred)
+<p id="section-3-5">An SDF Repository <span class="bcp14">SHOULD</span> adhere to the version constraints indicated via the version-related parameters and return a model with either the exact or a compatible version number.
+If the combination of version-related parameters is unsatisfiable (e.g., by specifying a <code>minVersion</code> of 1.2.0 and a <code>maxVersion</code> of 1.1.0), the SDF Repository <span class="bcp14">SHOULD</span> return an appropriate error response with an HTTP status code 400 (Bad Request).<a href="#section-3-5" class="pilcrow">¶</a></p>
+<p id="section-3-6">The introduction of the <code>subtree</code> parameter is motivated by the fact that multiple models may contribute to the same SDF namespace (and fragment identifiers are not included in HTTP requests).
 
 Using a JSON Path query with this paramter allows for giving the SDF Repository hosting the namespace definitions a hint on which parts of the target namespace should be included in the output.
 When an SDF Consumer specifies a set of <code>sdfObject</code>s and/or <code>sdfThing</code>s in its request, the SDF Repository <span class="bcp14">MAY</span> leave out definitions that are not needed to fulfill the request.
@@ -1262,7 +1270,27 @@ Similarly, the SDF Repository <span class="bcp14">MAY</span> combine multiple mo
           <tr>
             <td class="text-left" rowspan="1" colspan="1">version</td>
             <td class="text-left" rowspan="1" colspan="1">any</td>
-            <td class="text-left" rowspan="1" colspan="1">Defines the version number or version range of the model that is being referenced via the namespace URI.</td>
+            <td class="text-left" rowspan="1" colspan="1">Defines an exact model version that must match the retrieved model</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">minVersion</td>
+            <td class="text-left" rowspan="1" colspan="1">any</td>
+            <td class="text-left" rowspan="1" colspan="1">Defines a lower version bound that also includes this particular version.</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">maxVersion</td>
+            <td class="text-left" rowspan="1" colspan="1">any</td>
+            <td class="text-left" rowspan="1" colspan="1">Defines an upper version bound that also includes this particular version.</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">exclusiveMinVersion</td>
+            <td class="text-left" rowspan="1" colspan="1">any</td>
+            <td class="text-left" rowspan="1" colspan="1">Defines a lower version bound that does not include this particular version.</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">exclusiveMaxVersion</td>
+            <td class="text-left" rowspan="1" colspan="1">any</td>
+            <td class="text-left" rowspan="1" colspan="1">Defines an upper version bound that does not include this particular version.</td>
           </tr>
           <tr>
             <td class="text-left" rowspan="1" colspan="1">subtree</td>
@@ -1280,16 +1308,15 @@ Similarly, the SDF Repository <span class="bcp14">MAY</span> combine multiple mo
       <h2 id="name-examples">
 <a href="#section-4" class="section-number selfRef">4. </a><a href="#name-examples" class="section-name selfRef">Examples</a>
       </h2>
-<p id="section-4-1">A simple example for a model that uses the <code>version</code> parameter is shown in <a href="#code-version-parameter-example" class="auto internal xref">Figure 1</a>.
-Here, the caret character (<code>^</code>, percent-encoded as <code>%5E</code>) in the parameter value <code>^1.1.0</code> indicates that a version compatible with version <code>1.0.0</code> should be provided by the SDF repository.
-The <code>^</code> indicates that this should be a compatible <em>patch</em> version (i.e., the third digit may be greater than 0), while a <code>~</code> would indicate the same for the _ minor_ version or second digit.
-As the first digit stands for major versions, these updates are considered non-backwards-compatible and should not be retrieved automatically.<a href="#section-4-1" class="pilcrow">¶</a></p>
-<span id="name-example-sdf-model-of-a-ligh"></span><div id="code-version-parameter-example">
+<p id="section-4-1">A simple example for a model that uses the <code>version</code> parameter is shown in <a href="#code-simple-version-parameter-example" class="auto internal xref">Figure 1</a>.
+In this example, the version of the referenced model for the <code>cap</code> namespace must match the value 1.1.0.
+Updates that are applied to referenced model are not retrieved automatically.<a href="#section-4-1" class="pilcrow">¶</a></p>
+<span id="name-example-sdf-model-of-a-ligh"></span><div id="code-simple-version-parameter-example">
 <figure id="figure-1">
         <div class="lang-sdf sourcecode" id="section-4-2.1">
 <pre>
 namespace:
-  cap: https://example.com/capability/cap?version=%5E1.1.0
+  cap: https://example.com/capability/cap?version=1.1.0
   lamps: https://example.com/lamps
 defaultNamespace: lamps
 sdfObject:
@@ -1300,45 +1327,19 @@ sdfObject:
 </pre>
 </div>
 <figcaption><a href="#figure-1" class="selfRef">Figure 1</a>:
-<a href="#name-example-sdf-model-of-a-ligh" class="selfRef">Example SDF model of a light switch that refers to models of capabilities compatible with version 1.1.0.</a>
+<a href="#name-example-sdf-model-of-a-ligh" class="selfRef">Example SDF model of a light switch that refers to the version 1.1.0 of an external model.</a>
         </figcaption></figure>
 </div>
-<p id="section-4-3">The parametrization of URIs can also be used to use different version ranges for certain parts of a referenced namespace.
-In the example shown in <a href="#code-different-versions-parameter-example" class="auto internal xref">Figure 2</a>, a version 2.0.0 of the models hosted under <code>https://example.com/capability/cap</code> has added a new status property that has not been part of previous versions.
-At the same time, a non-backwards-compatible change has been applied to the referenced <code>toggle</code> action.
-To keep using the old <code>toggle</code> action while already incorporating the new <code>status</code> property, the namespacing concept allows referring to different versions via the new query parameters that have been introduced.<a href="#section-4-3" class="pilcrow">¶</a></p>
-<span id="name-example-sdf-model-of-a-light"></span><div id="code-different-versions-parameter-example">
+<p id="section-4-3">A second example that also takes model updates into account is shown in <a href="#code-version-parameter-example" class="auto internal xref">Figure 2</a>.
+Here, the parameters <code>minVersion</code> and <code>exlusiveMaxVersion</code> indicate that model version for the <code>cap</code> namespace should be greater than or equal to 1.1.0 but less than 1.2.0.
+In many programming language ecosystems, this would correspond with the "caret notation" (<code>^</code>) that indicates that patch versions for dependencies should be retrieved automatically.
+As not all SDF models will use semantic versioning <span>[<a href="#SEMVER" class="cite xref">SEMVER</a>]</span> in practice, this approach is more flexible and also covers version numbers that rely on dates, for example.<a href="#section-4-3" class="pilcrow">¶</a></p>
+<span id="name-example-sdf-model-of-a-light"></span><div id="code-version-parameter-example">
 <figure id="figure-2">
         <div class="lang-sdf sourcecode" id="section-4-4.1">
 <pre>
 namespace:
-  cap11: https://example.com/capability/cap?version=%5E1.1.0
-  cap2: https://example.com/capability/cap?version=%5E2.0.0
-  lamps: https://example.com/lamps
-defaultNamespace: lamps
-sdfObject:
-  LightSwitch:
-    sdfAction:
-      toggle:
-        sdfRef: cap11:/sdfObject/Switch/sdfAction/toggle
-    sdfProperty:
-      status:
-        sdfRef: cap:/sdfObject/Switch/sdfProperty/status
-</pre>
-</div>
-<figcaption><a href="#figure-2" class="selfRef">Figure 2</a>:
-<a href="#name-example-sdf-model-of-a-light" class="selfRef">Example SDF model of a light switch that refers to two different version ranges of models from the capability namespace.</a>
-        </figcaption></figure>
-</div>
-<p id="section-4-5">Lastly, since we are only using definitions from the <code>sdfObject</code> <code>Switch</code> in the referenced namespace, we can limit the subtree that we are referring to via the <code>subtree</code> parameter.
-<a href="#code-jsonpath-example" class="auto internal xref">Figure 3</a> shows a simple example where a JSONPatch expression is being used for this purpose.
-As JSONPath is very expressive, this approach allows for fine-grained control for limiting how much of the target namespace will actually be retrived when dereferencing the namespace URI.<a href="#section-4-5" class="pilcrow">¶</a></p>
-<span id="name-example-sdf-model-of-a-light-"></span><div id="code-jsonpath-example">
-<figure id="figure-3">
-        <div class="lang-sdf sourcecode" id="section-4-6.1">
-<pre>
-namespace:
-  cap: https://example.com/capability/cap?version=%5E1.1.0&amp;subtree=%24.sdfObject.Switch
+  cap: https://example.com/capability/cap?minVersion=1.1.0&amp;exclusiveMaxVersion=1.2.0
   lamps: https://example.com/lamps
 defaultNamespace: lamps
 sdfObject:
@@ -1348,11 +1349,60 @@ sdfObject:
         sdfRef: cap:/sdfObject/Switch/sdfAction/toggle
 </pre>
 </div>
-<figcaption><a href="#figure-3" class="selfRef">Figure 3</a>:
-<a href="#name-example-sdf-model-of-a-light-" class="selfRef">Example SDF model of a light switch restricting the deferenced namespace via a JSONPath expression in dot notation.</a>
+<figcaption><a href="#figure-2" class="selfRef">Figure 2</a>:
+<a href="#name-example-sdf-model-of-a-light" class="selfRef">Example SDF model of a light switch that refers to a model version that is greater than or equal 1.1.0 and less than 1.2.0.</a>
         </figcaption></figure>
 </div>
-<p id="section-4-7">Note that the use of both the <code>version</code> and the <code>subtree</code> parameters may require the values to be percent-encoded, which decreases the human-readability of the namespace URIs.<a href="#section-4-7" class="pilcrow">¶</a></p>
+<p id="section-4-5">The parametrization of URIs can also be used to use different version ranges for certain parts of a referenced namespace.
+In the example shown in <a href="#code-different-versions-parameter-example" class="auto internal xref">Figure 3</a>, version 2.0.0 of the models hosted under <code>https://example.com/capability/cap</code> has added a new status property that has not been part of previous versions.
+At the same time, a non-backwards-compatible change has been applied to the referenced <code>toggle</code> action that should not be taken over yet.
+To keep using the old <code>toggle</code> action while already incorporating the new <code>status</code> property, the namespacing concept allows referring to different versions via the new query parameters that have been introduced.<a href="#section-4-5" class="pilcrow">¶</a></p>
+<span id="name-example-sdf-model-of-a-light-"></span><div id="code-different-versions-parameter-example">
+<figure id="figure-3">
+        <div class="lang-sdf sourcecode" id="section-4-6.1">
+<pre>
+namespace:
+  cap11: https://example.com/capability/cap?minVersion=1.1.0&amp;exclusiveMaxVersion=1.2.0
+  cap2: https://example.com/capability/cap?minVersion=2.0.0&amp;exclusiveMaxVersion=2.1.0
+  lamps: https://example.com/lamps
+defaultNamespace: lamps
+sdfObject:
+  LightSwitch:
+    sdfAction:
+      toggle:
+        sdfRef: cap11:/sdfObject/Switch/sdfAction/toggle
+    sdfProperty:
+      status:
+        sdfRef: cap2:/sdfObject/Switch/sdfProperty/status
+</pre>
+</div>
+<figcaption><a href="#figure-3" class="selfRef">Figure 3</a>:
+<a href="#name-example-sdf-model-of-a-light-" class="selfRef">Example SDF model of a light switch that refers to two different version ranges of models from the capability namespace.</a>
+        </figcaption></figure>
+</div>
+<p id="section-4-7">Lastly, since we are only using definitions from the <code>sdfObject</code> <code>Switch</code> in the referenced namespace, we can limit the subtree that we are referring to via the <code>subtree</code> parameter.
+<a href="#code-jsonpath-example" class="auto internal xref">Figure 4</a> shows a simple example where a JSONPatch expression is being used for this purpose.
+As JSONPath is very expressive, this approach allows for fine-grained control for limiting how much of the target namespace will actually be retrived when dereferencing the namespace URI.<a href="#section-4-7" class="pilcrow">¶</a></p>
+<span id="name-example-sdf-model-of-a-light-s"></span><div id="code-jsonpath-example">
+<figure id="figure-4">
+        <div class="lang-sdf sourcecode" id="section-4-8.1">
+<pre>
+namespace:
+  cap: https://example.com/capability/cap?minVersion=1.1.0&amp;exclusiveMaxVersion=1.2.0&amp;subtree=%24.sdfObject.Switch
+  lamps: https://example.com/lamps
+defaultNamespace: lamps
+sdfObject:
+  LightSwitch:
+    sdfAction:
+      toggle:
+        sdfRef: cap:/sdfObject/Switch/sdfAction/toggle
+</pre>
+</div>
+<figcaption><a href="#figure-4" class="selfRef">Figure 4</a>:
+<a href="#name-example-sdf-model-of-a-light-s" class="selfRef">Example SDF model of a light switch restricting the deferenced namespace via a JSONPath expression in dot notation.</a>
+        </figcaption></figure>
+</div>
+<p id="section-4-9">Note that the use of the <code>subtree</code> parameter requires percent-encoding parts of the value, which decreases the human-readability of the namespace URIs.<a href="#section-4-9" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="security-considerations">
@@ -1372,29 +1422,49 @@ sdfObject:
 <p id="section-6-1">This document has no IANA actions.<a href="#section-6-1" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="sec-normative-references">
+<div id="sec-combined-references">
 <section id="section-7">
-      <h2 id="name-normative-references">
-<a href="#section-7" class="section-number selfRef">7. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+      <h2 id="name-references">
+<a href="#section-7" class="section-number selfRef">7. </a><a href="#name-references" class="section-name selfRef">References</a>
       </h2>
+<div id="sec-normative-references">
+<section id="section-7.1">
+        <h3 id="name-normative-references">
+<a href="#section-7.1" class="section-number selfRef">7.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+        </h3>
 <dl class="references">
 <dt id="RFC2119">[RFC2119]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2119">https://www.rfc-editor.org/rfc/rfc2119</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC8174">[RFC8174]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8174">https://www.rfc-editor.org/rfc/rfc8174</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC9535">[RFC9535]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Gössner, S., Ed.</span>, <span class="refAuthor">Normington, G., Ed.</span>, and <span class="refAuthor">C. Bormann, Ed.</span>, <span class="refTitle">"JSONPath: Query Expressions for JSON"</span>, <span class="seriesInfo">RFC 9535</span>, <span class="seriesInfo">DOI 10.17487/RFC9535</span>, <time datetime="2024-02" class="refDate">February 2024</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9535">https://www.rfc-editor.org/rfc/rfc9535</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC9880">[RFC9880]</dt>
-    <dd>
+      <dd>
 <span class="refAuthor">Koster, M., Ed.</span>, <span class="refAuthor">Bormann, C., Ed.</span>, and <span class="refAuthor">A. Keränen</span>, <span class="refTitle">"Semantic Definition Format (SDF) for Data and Interactions of Things"</span>, <span class="seriesInfo">RFC 9880</span>, <span class="seriesInfo">DOI 10.17487/RFC9880</span>, <time datetime="2026-01" class="refDate">January 2026</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9880">https://www.rfc-editor.org/rfc/rfc9880</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
+</section>
+</div>
+<div id="sec-informative-references">
+<section id="section-7.2">
+        <h3 id="name-informative-references">
+<a href="#section-7.2" class="section-number selfRef">7.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
+        </h3>
+<dl class="references">
+<dt id="SEMVER">[SEMVER]</dt>
+      <dd>
+<span class="refAuthor">Preston-Werner, T.</span>, <span class="refTitle">"Semantic Versioning 2.0.0"</span>, <span>&lt;<a href="https://semver.org/spec/v2.0.0.html">https://semver.org/spec/v2.0.0.html</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+</dl>
+</section>
+</div>
 </section>
 </div>
 <div id="acknowledgments">
