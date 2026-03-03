@@ -148,9 +148,9 @@ Table of Contents
    via the version-related parameters and return a model with either the
    exact or a compatible version number.  If the combination of version-
    related parameters is unsatisfiable (e.g., by specifying a minVersion
-   of 1.2.0 and a maxVersion of 1.1.0), the server hosting the SDF
-   models SHOULD return an appropriate error message (e.g., with an HTTP
-   status code 400 Bad Request).
+   of 1.2.0 and a maxVersion of 1.1.0), the SDF Repository SHOULD return
+   an appropriate error response with an HTTP status code 400 (Bad
+   Request).
 
    The introduction of the subtree parameter is motivated by the fact
    that multiple models may contribute to the same SDF namespace (and

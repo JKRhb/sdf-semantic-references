@@ -1247,7 +1247,7 @@ This memo utilizes query parameters to enhance the namespacing concept with addi
 </li>
       </ol>
 <p id="section-3-5">An SDF Repository <span class="bcp14">SHOULD</span> adhere to the version constraints indicated via the version-related parameters and return a model with either the exact or a compatible version number.
-If the combination of version-related parameters is unsatisfiable (e.g., by specifying a <code>minVersion</code> of 1.2.0 and a <code>maxVersion</code> of 1.1.0), the server hosting the SDF models <span class="bcp14">SHOULD</span> return an appropriate error message (e.g., with an HTTP status code 400 Bad Request).<a href="#section-3-5" class="pilcrow">¶</a></p>
+If the combination of version-related parameters is unsatisfiable (e.g., by specifying a <code>minVersion</code> of 1.2.0 and a <code>maxVersion</code> of 1.1.0), the SDF Repository <span class="bcp14">SHOULD</span> return an appropriate error response with an HTTP status code 400 (Bad Request).<a href="#section-3-5" class="pilcrow">¶</a></p>
 <p id="section-3-6">The introduction of the <code>subtree</code> parameter is motivated by the fact that multiple models may contribute to the same SDF namespace (and fragment identifiers are not included in HTTP requests).
 
 Using a JSON Path query with this paramter allows for giving the SDF Repository hosting the namespace definitions a hint on which parts of the target namespace should be included in the output.
