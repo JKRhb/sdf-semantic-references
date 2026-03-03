@@ -1,0 +1,116 @@
+{
+  "magic": "E!vIA5L86J2I",
+  "timestamp": "2026-03-03T00:15:50.908296+00:00",
+  "repo": "JKRhb/sdf-semantic-references",
+  "labels": [
+    {
+      "name": "bug",
+      "description": "Something isn't working",
+      "color": "d73a4a"
+    },
+    {
+      "name": "documentation",
+      "description": "Improvements or additions to documentation",
+      "color": "0075ca"
+    },
+    {
+      "name": "duplicate",
+      "description": "This issue or pull request already exists",
+      "color": "cfd3d7"
+    },
+    {
+      "name": "enhancement",
+      "description": "New feature or request",
+      "color": "a2eeef"
+    },
+    {
+      "name": "good first issue",
+      "description": "Good for newcomers",
+      "color": "7057ff"
+    },
+    {
+      "name": "help wanted",
+      "description": "Extra attention is needed",
+      "color": "008672"
+    },
+    {
+      "name": "invalid",
+      "description": "This doesn't seem right",
+      "color": "e4e669"
+    },
+    {
+      "name": "question",
+      "description": "Further information is requested",
+      "color": "d876e3"
+    },
+    {
+      "name": "wontfix",
+      "description": "This will not be worked on",
+      "color": "ffffff"
+    }
+  ],
+  "issues": [],
+  "pulls": [
+    {
+      "number": 1,
+      "id": "PR_kwDORccfpM7HVBiV",
+      "title": "Add initial draft content",
+      "url": "https://github.com/JKRhb/sdf-semantic-references/pull/1",
+      "state": "MERGED",
+      "author": "JKRhb",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "This PR adds some initial text to the document.",
+      "createdAt": "2026-03-02T13:12:28Z",
+      "updatedAt": "2026-03-02T17:14:48Z",
+      "baseRepository": "JKRhb/sdf-semantic-references",
+      "baseRefName": "main",
+      "baseRefOid": "df59fb4da5053343eef2d049aef3901c9ba85694",
+      "headRepository": "JKRhb/sdf-semantic-references",
+      "headRefName": "initial-content",
+      "headRefOid": "d521d0e00f65345f9d4891e99a877a93ea96e265",
+      "closedAt": "2026-03-02T17:14:45Z",
+      "mergedAt": "2026-03-02T17:14:45Z",
+      "mergedBy": "JKRhb",
+      "mergeCommit": {
+        "oid": "90587027e7350393e1a04faa615428e8e98fd232"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDORccfpM7nCQo6",
+          "commit": {
+            "abbreviatedOid": "f66a40e"
+          },
+          "author": "github-actions",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-03-02T13:12:52Z",
+          "updatedAt": "2026-03-02T13:12:52Z",
+          "comments": [
+            {
+              "originalPosition": 4,
+              "body": "````suggestion\n\n````",
+              "createdAt": "2026-03-02T13:12:52Z",
+              "updatedAt": "2026-03-02T13:12:52Z"
+            },
+            {
+              "originalPosition": 44,
+              "body": "````suggestion\nFor this purpose, this memo introduces two standardized query parameters that\n````",
+              "createdAt": "2026-03-02T13:12:52Z",
+              "updatedAt": "2026-03-02T13:12:52Z"
+            },
+            {
+              "originalPosition": 50,
+              "body": "````suggestion\nAn SDF Repository SHOULD adhere to the version constraints indicated via the `version` parameter and return a model with either the exact or a compatible version number.\n````",
+              "createdAt": "2026-03-02T13:12:52Z",
+              "updatedAt": "2026-03-02T13:12:52Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
