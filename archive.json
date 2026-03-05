@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-03-03T00:15:50.908296+00:00",
+  "timestamp": "2026-03-05T00:15:26.745386+00:00",
   "repo": "JKRhb/sdf-semantic-references",
   "labels": [
     {
@@ -111,6 +111,34 @@
           ]
         }
       ]
+    },
+    {
+      "number": 2,
+      "id": "PR_kwDORccfpM7HlqOe",
+      "title": "Improve version-related query parameters",
+      "url": "https://github.com/JKRhb/sdf-semantic-references/pull/2",
+      "state": "MERGED",
+      "author": "JKRhb",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Since I noticed that the current approach of using a single `version` parameter with concepts such as the caret notation, this PR fans out the single `version` parameter into multiple ones which allow for more fine-grained of minimal and maximal version numbers. The new approach also supports versioning formats that do not adhere to the semantic versioning format with a major, minor, and patch version number.\r\n\r\n",
+      "createdAt": "2026-03-03T12:01:10Z",
+      "updatedAt": "2026-03-03T12:14:41Z",
+      "baseRepository": "JKRhb/sdf-semantic-references",
+      "baseRefName": "main",
+      "baseRefOid": "90587027e7350393e1a04faa615428e8e98fd232",
+      "headRepository": "JKRhb/sdf-semantic-references",
+      "headRefName": "improve-version-parameters",
+      "headRefOid": "aeb1b8954ae532ba0f562212b6b0db45c030cccd",
+      "closedAt": "2026-03-03T12:14:37Z",
+      "mergedAt": "2026-03-03T12:14:37Z",
+      "mergedBy": "JKRhb",
+      "mergeCommit": {
+        "oid": "6d4d12091db7907d0a90e6f2292ca952560e993e"
+      },
+      "comments": [],
+      "reviews": []
     }
   ]
 }
